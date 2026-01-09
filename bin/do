@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# do : Do an action
+#
+# Author: rafmartom (A T) gmail (D O T) com
+#
+# Usage:
+#   do [options] <value>
+#
+# Options:
+#   -h | --help          Show this help message
+#   -g | --greet <value>
+
+
+## ----------------------------------------------------------------------------
+# @section ARG_AND_VAR_INITIALIZAION
+
+
+usage() {
+    head -n 12 "$0" | tail -n +3 \
+        | awk '{ sub(/^# ?/, ""); print }'
+    exit 0
+}
+
+# Sourcing modules
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "${CURRENT_DIR}"/../src/greet.sh
+
+# Initializing variables
+GREET=0
+VALUE=""
+
+# Argument handling
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            usage
+            ;;
+        -g|--greet)
+            GREET=1
+            VALUE="$2"
+            shift 2
+            ;;
+        -*)
+            echo "[Error] Unknown option: $1" >&2
+            usage
+            ;;
+        *)
+            echo "[Error] Unexpected argument: $1" >&2
+            usage
+            ;;
+    esac
+done
+
+## EOF EOF EOF ARG_AND_VAR_INITIALIZAION 
+## ----------------------------------------------------------------------------
+
+## ----------------------------------------------------------------------------
+# @section MAIN_SUBROUTINES
+
+
+if [[ $GREET -eq 1 ]]; then
+    greet "$VALUE"
+fi
+
+## EOF EOF EOF MAIN_SUBROUTINES 
+## ----------------------------------------------------------------------------

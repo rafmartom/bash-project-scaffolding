@@ -1,0 +1,19 @@
+services:
+  tests:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    volumes:
+      - .:/app
+    entrypoint: ["/usr/bin/bats"]
+    command: ["tests/greet.bats"]
+
+  shell:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    volumes:
+      - .:/app
+    entrypoint: ["/bin/bash"]
+    stdin_open: true
+    tty: true
